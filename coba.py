@@ -12,7 +12,7 @@ import time
 
 app = Flask(__name__)  
 
-engine = create_engine("mysql+mysqldb://root@localhost:3306/skripsi")
+engine = create_engine("mysql+mysqldb://root@103.41.206.86/skripsi")
 Base = declarative_base()
 Base.metadata.create_all(engine, checkfirst=True)
 Session = sessionmaker(bind=engine)
@@ -150,9 +150,6 @@ def recog_user():
                     if decode1(us.username) == "oke":
                         a = "oke3"
                         b = 300
-                        print ("----3")
-                        us.foto_baru = filePath1(us.username)
-                        print("user : "+us.foto_baru)
                         if detect_user_face(filePath1(us.username)) == us.username:
                             print ("----4")
                             milliseconds = int(round(time.time() * 1000))
