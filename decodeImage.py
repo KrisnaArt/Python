@@ -19,17 +19,23 @@ def decode(filename):
         return "gagal"
     
 def decode1(filename):
-    f =  open('fotoWajah/detect/'+filename+'/'+filename+'_1.txt',"r")
+    i = 0
+    while os.path.exists(f"fotoWajah/detect/"+filename+"/face_{i}.txt"):
+        while os.path.exists(f"fotoWajah/detect/"+filename+"/face_{i}.jpg"):
+            i += 1
 
-    with open('fotoWajah/detect/'+filename+'/'+filename+'_1.jpg', "wb") as fh:
-        fh.write(base64.decodebytes(f.read().encode()))
-        test = Image.open('fotoWajah/detect/'+filename+'/'+filename+'_1.jpg').rotate(90)
-        test.save('fotoWajah/detect/'+filename+'/'+filename+'_1.jpg')
-    if(os.path.exists('fotoWajah/detect/'+filename+'/'+filename+'_1.jpg')):
-        print ("----decode")
-        f.close()
-        os.remove('fotoWajah/detect/'+filename+'/'+filename+"_1"+".txt")
-        return "oke"
-    else:
-        print ("----gagal decode")
-        return "gagal"
+    file = open(f"fotoWajah/detect/"+filename+"/face_{i}.txt", "r")
+
+    if(os.path.exists(f"fotoWajah/detect/"+filename+"/face_{i}.jpg")):
+        with open(f"fotoWajah/detect/"+filename+"/face_{i}.jpg", "wb") as fh:
+            fh.write(base64.decodebytes(file.read().encode()))
+            test = Image.open(f"fotoWajah/detect/"+filename+"/face_{i}.jpg").rotate(90)
+            test.save(f"fotoWajah/detect/"+filename+"/face_{i}.jpg")
+        if(os.path.exists(f"fotoWajah/detect/"+filename+"/face_{i}.jpg")):
+            print ("----decode")
+            file.close()
+            os.remove(f"fotoWajah/detect/"+filename+"/face_{i}.txt")
+            return "oke"
+        else:
+            print ("----gagal decode")
+            return "gagal"
